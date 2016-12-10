@@ -1,0 +1,15 @@
+{% extends "doxwiki/base.html" %}
+{% block body %}
+<h1>List of all tags</h1>
+{% if tags %}
+<ul>
+{% for tag in tags %}
+<li>
+    <p><a href="{% url 'doxwiki:tag' tag.name%}">{{tag.name}}</a><p>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<div class="alert alert-info">No tags found. Consider adding some tags to your pages.</div>
+{% endif %}
+{% endblock %}

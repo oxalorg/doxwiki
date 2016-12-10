@@ -1,0 +1,9 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul class=flashes>
+    {% for flash_category, flash_message in messages %}
+    <li class="alert alert-{{ flash_category }}">{{ flash_message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}

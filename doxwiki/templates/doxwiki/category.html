@@ -1,0 +1,20 @@
+{% extends "doxwiki/base.html" %}
+{% block body %}
+<h1>Pages with the category <strong>{{ category.name }}</strong></h1>
+{% if category.page_set %}
+<ul>
+{% for page in category.page_set.all %}
+<li>
+    <a href="{% url 'doxwiki:page' page.slug %}">{{page.title}}</a>
+    {% if page.categories %}
+    {% for category in page.categories.all %}    
+    <div class="category-item">{{ category.name }}</div> 
+    {% endfor %}
+    {% endif %}
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<div class="alert alert-info">No pages found. Consider adding this category to some of your pages.</div>
+{% endif %}
+{% endblock %}

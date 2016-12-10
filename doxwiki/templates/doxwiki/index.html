@@ -1,0 +1,34 @@
+{% extends "doxwiki/base.html" %}
+{% block body %}
+<h1>Welcome</h1>
+<p>Sort by <a href="{% url 'doxwiki:index' %}?sort=-date_modified">Recently modified</a>, <a href="{% url 'doxwiki:index' %}">Newest</a>, <a href="{% url 'doxwiki:index' %}?sort=date_created">Oldest</a></p>
+<div class="table-responsive">
+<table class="table">
+<thead>
+    <tr>
+        <th>Page</th>
+        <th>Filed under</th>
+    </tr>
+</thead>
+<tbody>
+{% for page in pages %}
+<tr>
+    <td><a href="{% url 'doxwiki:page' page.slug %}">{{page.title}}</a></td>
+    <td>
+    {% if page.categories %}
+    {% for category in page.categories.all %}    
+    <div class="tag-item"><span class="label label-primary"><a href="{% url 'doxwiki:category' category.name %}">{{ category.name }}</a></span></div>
+    {% endfor %}
+    {% endif %}
+    {% if page.tags %}
+    {% for tag in page.tags.all %}    
+    <div class="tag-item"><span class="label label-default"><a href="{% url 'doxwiki:tag' tag.name %}">{{ tag.name }}</a></span></div>
+    {% endfor %}
+    {% endif %}
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

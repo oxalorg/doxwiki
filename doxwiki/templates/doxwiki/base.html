@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>WoxWiki</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'doxwiki/css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'doxwiki/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'doxwiki/css/bootflat.css' %}">
+        <link rel="stylesheet" href="{% static 'doxwiki/css/custom.css' %}">
+        {% block head %}{% endblock %}
+        <style>{% block style %}{% endblock %}</style>
+    </head>
+    <body>
+        {% include "doxwiki/navbar.html" %}
+        <div class="container">
+        <main id="main">
+        {% block body %}{% endblock %}
+        </main>
+        </div>
+        <script src="{% static 'doxwiki/js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'doxwiki/js/jquery.caret.min.js' %}"></script>
+        <script src="{% static 'doxwiki/js/jquery.tag-editor.min.js' %}"></script>
+        <script src="{% static 'doxwiki/js/bootstrap.min.js' %}"></script>
+        <script type="text/javascript">{% block script %}{% endblock %}</script>
+    </body>
+</html>

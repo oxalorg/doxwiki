@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='simplemde.min.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='editor.css')}}">
+<script src="{{ url_for('static', filename='simplemde.min.js')}}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='jquery.tag-editor.css') }}">
+{% endblock %}
+{% block body %}
+<h1> Add a new page </h1>
+<form method="POST">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="title" class="form-control" id="title" placeholder="Title">
+    </div>
+    <div class="form-group">
+        <label for="cat-tags">Categories</label>
+        <input class="form-control" id="cat-tags" name="cat-tags">
+    </div>
+    <div class="form-group">
+        <label for="tagger">Tags</label>
+        <input class="form-control" id="tagger">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputFile">File input</label>
+        <input type="file" id="exampleInputFile">
+        <p class="help-block">Example block-level help text here.</p>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox"> Check me out
+        </label>
+    </div>
+    <div id="tag-list">
+    </div>
+    <div id="category-list">
+    </div>
+    <div class="form-group">
+        <label for="Content">Content</label>
+        <textarea name="content" id="content"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
+{% block script %}
+$('#tagger').tagEditor();
+$("form").submit( function(eventObj) {
+    var tags = $('#tagger').tagEditor('getTags')[0].tags;
+    $.each(tags, function(i, v){
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "tags[]")
+            .attr('value', v)
+            .appendTo('#tag-list');
+    });
+    return true;
+});
+
+$('#cat-tags').tagEditor();
+$("form").submit( function(eventObj) {
+    var tags = $('#cat-tags').tagEditor('getTags')[0].tags;
+    $.each(tags, function(i, v){
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "categories[]")
+            .attr('value', v)
+            .appendTo('#category-list');
+    });
+    return true;
+});
+var editor = new SimpleMDE({ element: $("#content")[0] });
+{% endblock %}
+

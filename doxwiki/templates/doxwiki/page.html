@@ -1,0 +1,42 @@
+{% extends "doxwiki/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'doxwiki/css/simplemde.min.css'%}">
+<link rel="stylesheet" href="{% static 'doxwiki/css/editor.css' %}">
+<script src="{% static 'doxwiki/js/simplemde.min.js' %}"></script>
+{% endblock %}
+{% block body %}
+<h1>{{ page.title }}</h1>
+<p><div> 
+{% if page.categories %}
+{% for category in page.categories.all %}    
+<div class="tag-item"><span class="label label-primary"><a href="{% url 'doxwiki:category' category.name %}">{{ category.name }}</a></span></div>
+{% endfor %}
+{% endif %}
+{% if page.tags %}
+{% for tag in page.tags.all %}    
+<div class="tag-item"><span class="label label-default"><a href="{% url 'doxwiki:tag' tag.name %}">{{ tag.name }}</a></span></div>
+{% endfor %}
+{% endif %}
+</div>
+</p>
+<br>
+{{ page.html | safe }}
+<br>
+<div class="panel panel-default">
+  <div class="panel-heading">Meta</div>
+  <div class="panel-body">
+<p>Created on <span class="label label-primary">{{ page.date_created }}</span>
+ Modified on <span class="label label-default">{{ page.date_modified }}</span></p>
+  </div>
+
+{% if page.attachment_set %}
+  <div class="list-group">
+      {% for attachment in page.attachment_set.all %}
+      <a href="{{ attachment.file.url }}" class="list-group-item"><span class="glyphicon glyphicon-file"></span> {{ attachment.file.name }}</a>
+      {% endfor %}
+  </div>
+{% endif %}
+</div>
+{% endblock %}
+

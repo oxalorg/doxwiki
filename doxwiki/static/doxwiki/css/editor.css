@@ -1,0 +1,6 @@
+/* Over riding SimpleMDE */
+.CodeMirror {
+    border: 0;
+    border-top: 1px solid #ddd;
+    background-color: inherit;
+}

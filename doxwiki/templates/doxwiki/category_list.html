@@ -1,0 +1,39 @@
+{% extends "doxwiki/base.html" %}
+{% block body %}
+<h1>List of all categories</h1>
+{% if categories %}
+<div class="table-responsive">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Parent</th>
+            <th>Children</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for category in categories %}
+    <tr>
+        <td><a href="{% url 'doxwiki:category' category.name %}">{{category.name}}</a></td>
+        <td>
+            {% if category.parent %}
+                <a href="{% url 'doxwiki:category' category.parent.name %}">{{category.parent.name}}</a></td>
+            {% else %}
+                ---
+            {% endif %}
+        </td>
+        <td>
+            {% for child in category.child_set.all %}
+                <a href="{% url 'doxwiki:category' child.name %}">{{ child.name }}</a></td>
+                {% if not forloop.last %},{% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+</div>
+{% else %}
+<div class="alert alert-info">No categories found. Consider adding some categories to your pages.</div>
+{% endif %}
+{% endblock %}
